@@ -1,3 +1,6 @@
+
+const KnexSessionStore = require('connect-session-knex')(session)
+
 module.exports = {
   name: 'something catchy',
   secret: 'do not set here',
