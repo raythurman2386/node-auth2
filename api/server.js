@@ -3,6 +3,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
+const authRouter = require('./auth/auth.router');
 
 const server = express();
 
@@ -26,8 +27,6 @@ server.use(session({
   })
 }))
 
-server.use('/', () => {
-  res.status(200).json({ message: 'Working' })
-})
+server.use('/auth', authRouter)
 
 module.exports = server
