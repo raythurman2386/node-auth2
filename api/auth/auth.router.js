@@ -1,6 +1,7 @@
 const authRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const Users = require('../../data/helpers/user-model');
+const protected = require('../middleware/protected');
 
 authRouter
   // POST to register
@@ -33,6 +34,24 @@ authRouter
     } catch (error) {
       next(error)
     }
+  })
+
+  .get('/users', protected(), (req, res, next) => {
+    try {
+      res.json({ message: 'authorized' })
+    } catch (error) {
+      next(error)
+    }
+  })
+
+  .get('/logout', (req, res, next) => {
+    req.session.destroy(err => {
+      if (err) {
+        next(err)
+      } else {
+        res.json({ message: "logged out" })
+      }
+    })
   })
 
 module.exports = authRouter;
